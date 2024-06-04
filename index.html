@@ -84,24 +84,109 @@
       <button>End Timer</button>
       <button>Console Trace</button>
       <button>Trigger a Global Error</button>
+      <button>Test TrackJS</button>
     </section>
   </main>
 
   <script>
-    let form = document.querySelector('form');
+    const form = document.querySelector('form');
     form.addEventListener('submit', e => {
       e.preventDefault();
       let output = document.querySelector('output');
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      try {
+        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      } catch (e) {
+        console.log('That input was not valid. Enter something else.')
+      } finally {
+        console.log('You clicked a button.')
+      }
     });
 
-    let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
+    const errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
-    // Start your code here
-    // You may move this JS to another file if you wish
+    function handleConsoleTrance() {
+      console.trace()
+    }
+    errorBtns[0].addEventListener('click', () => {
+      console.log('Fnord')
+    })
+    errorBtns[1].addEventListener('click', () => {
+      console.error('chief keef aint bout this, chief keef aint bout that')
+    })
+    errorBtns[2].addEventListener('click', () => {
+      console.count('hanbaobao')
+      console.count('hanbaobao')
+    })
+    errorBtns[3].addEventListener('click', () => {
+      console.warn('im warning you...')
+    })
+    errorBtns[4].addEventListener('click', () => {
+      const num1 = 1000
+      const num2 = 1002
+      const reason = 'whatever'
+      console.assert((num1 + 1) === num2, {num1, num2, reason})
+    })
+    errorBtns[5].addEventListener('click', () => {
+      console.clear()
+    })
+    errorBtns[6].addEventListener('click', () => {
+      let myCat = { name: "Simon", furColor: "Gray" }
+      console.dir(myCat)
+    })
+    errorBtns[7].addEventListener('click', () => {
+      const buttonSection = document.getElementById('error-btns')
+      console.dirxml(buttonSection)
+    })
+    errorBtns[8].addEventListener('click', () => {
+      console.group('VeryGoodMessages')
+    })
+    errorBtns[9].addEventListener('click', () => {
+      console.groupEnd('VeryGoodMessages')
+    })
+    errorBtns[10].addEventListener('click', () => {
+      console.table([
+        {
+          name: "Simon",
+          furPattern: "Solid"
+        },
+        {
+          name: "Pebbles",
+          furPattern: "Striped"
+        }
+      ])
+    })
+    errorBtns[11].addEventListener('click', () => {
+      console.time('timer1')
+    })
+    errorBtns[12].addEventListener('click', () => {
+      console.timeEnd('timer1')
+    })
+    errorBtns[13].addEventListener('click', () => {
+      handleConsoleTrance();
+    })
+    errorBtns[14].addEventListener('click', () => {
+      throw new Error('You shouldnt click me!!1!')
+    })
+
+    errorBtns[15].addEventListener('click', () => {
+      TrackJS.track('Testing TrackJS!');
+    })
+
+    window.onerror = function(message, url, line, col, error) {
+      console.log('Uh oh! You did something wrong! YOu should feel bad!')
+      console.log(message + message + message)
+    }
+    
+  </script>
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "6dca6797dca842229e7641b13e748498"
+      // for more configuration options, see https://docs.trackjs.com
+    });
   </script>
 </body>
 
